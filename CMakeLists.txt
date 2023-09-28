@@ -1,6 +1,4 @@
-cmake_minimum_required(VERSION 3.10)
-set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
+cmake_minimum_required(VERSION "3.22.1")
 
-project(hello VERSION 1.0)
-add_executable(hello main.cpp)
+project("Useful_Algorithms")
+add_executable("Useful_Algorithms" "main.cpp")
