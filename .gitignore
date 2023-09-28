@@ -1,8 +1,7 @@
-<<<<<<< HEAD
 /out 
 bin/
 build/
-=======
+
 # Prerequisites
 *.d
 
@@ -35,4 +34,3 @@ build/
 *.exe
 *.out
 *.app
->>>>>>> b5a29a96730038d136de5b0c9846ae90ee8ffa63
