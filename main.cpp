@@ -1,8 +1,15 @@
-#include <cstdio>
+#include "Messages/Recruiter.h"
+#include <cstdlib>
 #include <iostream>
 
 int main() {
-  std::cout << "HELLO WORLD!\n";
+  Recruiter recruiter;
+  recruiter.SetRecruiter(50);
 
-  return 0;
+  int whatIs;
+  recruiter.GetRecruiter(whatIs);
+
+  std::cout << "Hello World!\n" << whatIs << '\n';
+
+  return EXIT_SUCCESS;
 }
