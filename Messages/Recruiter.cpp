@@ -1,4 +1,5 @@
 #include "Recruiter.h"
+#include <GLTF/gltf3.h>
 
 Recruiter::Recruiter() {}
 Recruiter::~Recruiter() {}
