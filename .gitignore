@@ -2,6 +2,9 @@
 bin/
 build/
 
+# Databases
+Database/
+
 # Prerequisites
 *.d
 
@@ -29,6 +32,8 @@ build/
 *.la
 *.a
 *.lib
+
+
 
 # Executables
 *.exe
