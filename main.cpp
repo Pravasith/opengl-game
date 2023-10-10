@@ -1,15 +1,15 @@
-#include "Messages/Recruiter.h"
+#include "CopyPaste/CopyPaste.h"
 #include <cstdlib>
 #include <iostream>
+#include <string>
 
 int main() {
-  Recruiter recruiter;
-  recruiter.SetRecruiter(50);
+  Clipboard clipboard;
 
-  int whatIs;
-  recruiter.GetRecruiter(whatIs);
+  std::string currentString;
+  clipboard.GetString(currentString);
 
-  std::cout << "Hello World!\n" << whatIs << '\n';
+  std::cout << currentString << '\n';
 
   return EXIT_SUCCESS;
 }

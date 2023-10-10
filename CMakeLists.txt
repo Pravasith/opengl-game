@@ -19,12 +19,12 @@ set(GLFW_BUILD_EXAMPLES
 add_subdirectory(/home/pravas/useful_libraries/glfw
                  /home/pravas/useful_libraries/glfw/src)
 add_subdirectory(Messages)
+add_subdirectory(CopyPaste)
 
 # find_package(OpenGL REQUIRED)
-
 set(SOURCE_FILES main.cpp)
 
-add_executable(LinkedIn main.cpp)
+add_executable(LinkedIn ${SOURCE_FILES})
 
 # Set the path to your GLFW installation set(glfw3_DIR
 # "/home/pravas/useful_libraries/glfw/build/src")
@@ -36,7 +36,7 @@ add_executable(LinkedIn main.cpp)
 
 # find_library(glfw3 libglfw3.a PATHS Deps/GLFW)
 
-target_link_libraries(LinkedIn PUBLIC Recruiter glfw)
+target_link_libraries(LinkedIn PUBLIC Recruiter CopyPaste glfw)
 
 # target_include_directories( LinkedIn PUBLIC "${PROJECT_SOURCE_DIR}/Messages"
 # "/home/pravas/useful_libraries/glfw/src" "/home/pravas/useful_libraries/glfw")
