@@ -1,1 +1,1 @@
-add_library(Recruiter Recruiter.cpp)
+add_library(Messages Recruiter.cpp Engineer.cpp)

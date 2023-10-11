@@ -20,6 +20,7 @@ add_subdirectory(/home/pravas/useful_libraries/glfw
                  /home/pravas/useful_libraries/glfw/src)
 add_subdirectory(Messages)
 add_subdirectory(CopyPaste)
+# add_subdirectory(Database)
 
 # find_package(OpenGL REQUIRED)
 set(SOURCE_FILES main.cpp)
@@ -36,9 +37,11 @@ add_executable(LinkedIn ${SOURCE_FILES})
 
 # find_library(glfw3 libglfw3.a PATHS Deps/GLFW)
 
-target_link_libraries(LinkedIn PUBLIC Recruiter CopyPaste glfw)
+target_link_libraries(LinkedIn PUBLIC Messages CopyPaste glfw)
 
 # target_include_directories( LinkedIn PUBLIC "${PROJECT_SOURCE_DIR}/Messages"
 # "/home/pravas/useful_libraries/glfw/src" "/home/pravas/useful_libraries/glfw")
 
 target_compile_features(LinkedIn PUBLIC cxx_std_17)
+
+set(ENV{DATABASE_PATH} 'Database/')
