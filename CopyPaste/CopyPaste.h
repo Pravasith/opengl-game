@@ -4,6 +4,6 @@
 
 class Clipboard {
 public:
-  void GetString(std::string &clipboardStr);
-  void SetString(std::string copyString);
+  void PasteStringFromClipboard(std::string &clipboardStr);
+  void CopyStringToClipboard(std::string clipboardStr);
 };

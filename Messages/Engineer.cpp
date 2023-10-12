@@ -8,27 +8,50 @@
 using std::string;
 namespace fs = std::filesystem;
 
-Engineer::Engineer() {
+Engineer::Engineer() { Init(); }
+Engineer::~Engineer() {}
+
+void Engineer::Init() {
+  string choice;
+
+  while (choice.compare("Q") != 0) {
+    std::cout << "First name?\n";
+    std::getline(std::cin, __fName);
+
+    std::cout << "Discovery?\n";
+    std::getline(std::cin, __discovery);
+
+    std::cout << "Likes?\n";
+    std::getline(std::cin, __likes);
+
+    std::cout << "Page Link?\n";
+    std::getline(std::cin, __pageLink);
+
+    std::cout << "No Exp?\n";
+    std::getline(std::cin, __noExp);
+
+    std::cout << "No Exp Like?\n";
+    std::getline(std::cin, __noExpLike);
+
+    ReplaceTemplateStrings();
+
+    std::cout << "Press Q to quit.\nOr any other key to continue...\n";
+    std::getline(std::cin, choice);
+  }
+}
+
+void Engineer::ReplaceTemplateStrings() {
   std::set<string> template_strings = {"<F_NAME>", "<DISCOVERY>",
                                        "<LIKES>",  "<PAGE_LINK>",
                                        "<NO_EXP>", "<NO_EXP_LIKE>"};
 
-  string fName = "fName";
-  string discovery = "discovery";
-  string likes = "likes";
-  string pageLink = "pageLink";
-  string noExp = "noExp";
-  string noExpLike = "noExpLike";
-
-  const string dirPath = "../../Database/FriendlyMessage.csv";
-
   string output;
 
   std::ifstream ifs;
-  ifs.open(dirPath);
+  ifs.open(__dirPath);
 
-  if (!fs::exists(dirPath))
-    std::cout << "ERROR: The file " << dirPath << " doesn't exist!\n";
+  if (!fs::exists(__dirPath))
+    std::cout << "ERROR: The file " << __dirPath << " doesn't exist!\n";
 
   if (!ifs.is_open())
     std::cout << "ERROR: File Not Open" << '\n';
@@ -41,17 +64,17 @@ Engineer::Engineer() {
         std::getline(ifs, value, '>');
 
         if (value == "F_NAME") {
-          value = fName;
+          value = __fName;
         } else if (value == "DISCOVERY") {
-          value = discovery;
+          value = __discovery;
         } else if (value == "LIKES") {
-          value = likes;
+          value = __likes;
         } else if (value == "PAGE_LINK") {
-          value = pageLink;
+          value = __pageLink;
         } else if (value == "NO_EXP") {
-          value = noExp;
+          value = __noExp;
         } else if (value == "NO_EXP_LIKE") {
-          value = noExpLike;
+          value = __noExpLike;
         }
 
         delimiterStart = 0;
@@ -66,5 +89,3 @@ Engineer::Engineer() {
     std::cout << output << std::endl;
   }
 }
-
-Engineer::~Engineer() {}

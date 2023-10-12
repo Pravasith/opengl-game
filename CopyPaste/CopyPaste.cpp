@@ -5,7 +5,7 @@
 #include <string>
 using std::string;
 
-void Clipboard::GetString(string &clipBoardString) {
+void Clipboard::PasteStringFromClipboard(string &clipBoardString) {
   string copiedValue;
   int a = glfwInit();
 
@@ -29,4 +29,19 @@ void Clipboard::GetString(string &clipBoardString) {
   clipBoardString = copiedValue;
 }
 
-void Clipboard::SetString(string clipBoardString) {}
+/* @only-windows
+ * @windows only function
+ */
+void Clipboard::CopyStringToClipboard(const string clipBoardString) {
+  // Use system() to run the clip.exe command
+  std::string command = "echo \"" + clipBoardString + "\" | clip.exe";
+  int result = std::system(command.c_str());
+
+  if (result == 0) {
+    // Successfully set clipboard text
+    /* std::cout << 1; */
+  } else {
+    // There was an error
+    /* std::cout << 0; */
+  }
+}

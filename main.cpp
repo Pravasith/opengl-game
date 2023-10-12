@@ -8,7 +8,8 @@ int main() {
   /* Clipboard clipboard; */
   /*  */
   /* std::string currentString; */
-  /* clipboard.GetString(currentString); */
+  /* clipboard.PasteStringFromClipboard(currentString); */
+  /* clipboard.CopyStringToClipboard(currentString); */
 
   /* std::cout << currentString << '\n'; */
 
