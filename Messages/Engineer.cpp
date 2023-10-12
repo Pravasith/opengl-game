@@ -13,16 +13,16 @@ Engineer::Engineer() {
                                        "<LIKES>",  "<PAGE_LINK>",
                                        "<NO_EXP>", "<NO_EXP_LIKE>"};
 
-  string fName;
-  string discovery;
-  string likes;
-  string pageLink;
-  string noExp;
-  string noExpLike;
+  string fName = "fName";
+  string discovery = "discovery";
+  string likes = "likes";
+  string pageLink = "pageLink";
+  string noExp = "noExp";
+  string noExpLike = "noExpLike";
 
   const string dirPath = "../../Database/FriendlyMessage.csv";
 
-  string output = "NADA";
+  string output;
 
   std::ifstream ifs;
   ifs.open(dirPath);
@@ -34,28 +34,30 @@ Engineer::Engineer() {
     std::cout << "ERROR: File Not Open" << '\n';
   else {
     string value;
+    bool delimiterStart = 0;
 
     while (ifs.good()) {
-      std::getline(ifs, value, ' ');
-      std::cout << value << '\n';
+      if (delimiterStart) {
+        std::getline(ifs, value, '>');
 
-      const bool hasTemplate =
-          template_strings.find(value) != template_strings.end();
-
-      if (hasTemplate) {
-        if (value == "<F_NAME>") {
+        if (value == "F_NAME") {
           value = fName;
-        } else if (value == "<DISCOVERY>") {
+        } else if (value == "DISCOVERY") {
           value = discovery;
-        } else if (value == "<LIKES>") {
+        } else if (value == "LIKES") {
           value = likes;
-        } else if (value == "<PAGE_LINK>") {
+        } else if (value == "PAGE_LINK") {
           value = pageLink;
-        } else if (value == "<NO_EXP>") {
+        } else if (value == "NO_EXP") {
           value = noExp;
-        } else if (value == "<NO_EXP_LIKE>") {
+        } else if (value == "NO_EXP_LIKE") {
           value = noExpLike;
         }
+
+        delimiterStart = 0;
+      } else {
+        std::getline(ifs, value, '<');
+        delimiterStart = 1;
       }
 
       output += value;
