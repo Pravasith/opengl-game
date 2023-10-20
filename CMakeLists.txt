@@ -22,6 +22,7 @@ set(GLFW_BUILD_EXAMPLES
 add_subdirectory(Messages)
 add_subdirectory(CopyPaste)
 add_subdirectory(ResumeContent)
+add_subdirectory(Algorithms)
 add_subdirectory(vendor)
 
 # find_package(OpenGL REQUIRED)
@@ -41,8 +42,9 @@ add_executable(LinkedIn ${SOURCE_FILES})
 
 find_package(glfw3 REQUIRED)
 
-target_link_libraries(LinkedIn PUBLIC Messages CopyPaste CraftResume glfw)
-target_link_libraries(LinkedIn PUBLIC glad)
+target_link_libraries(LinkedIn PUBLIC Messages CopyPaste CraftResume)
+target_link_libraries(LinkedIn PUBLIC Algorithms)
+target_link_libraries(LinkedIn PUBLIC glad glfw)
 
 # target_include_directories( LinkedIn PUBLIC "${PROJECT_SOURCE_DIR}/Messages"
 # /home/pravas/useful_libraries/glfw/src /home/pravas/useful_libraries/glfw)
