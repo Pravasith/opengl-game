@@ -1,1 +1,1 @@
-add_library(Algorithms QuickSort.cpp)
+add_library(Algorithms quicksort/QuickSort.cpp)
