@@ -26,11 +26,13 @@ set(SOURCE_FILES main.cpp)
 
 add_executable(dsa ${SOURCE_FILES})
 
+find_package(OpenGL REQUIRED)
 find_package(glfw3 REQUIRED)
 
 target_link_libraries(dsa PUBLIC CopyPaste)
 target_link_libraries(dsa PUBLIC Algorithms DataStructures)
 target_link_libraries(dsa PUBLIC glad glfw)
+target_link_libraries(dsa PUBLIC OpenGL::GL)
 
 target_compile_features(dsa PUBLIC cxx_std_17)
 
