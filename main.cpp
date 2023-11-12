@@ -82,8 +82,8 @@ int main(int argc, char **argv) {
   /* glDeleteProgram(shaderProgram); */
   /*  */
 
-  /* Window *window = nullptr; */
-  /* window = Window::Get(); */
+  Window *window = nullptr;
+  window = Window::Get("/Andra");
 
   /* while (!glfwWindowShouldClose(window)) { */
   /* ProcessInput(window); */
