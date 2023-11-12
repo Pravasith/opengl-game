@@ -6,6 +6,7 @@
 #include <vector>
 
 static const char *extract_version(const char *full) {
+
   char curr = *full;
   const char *end;
 
