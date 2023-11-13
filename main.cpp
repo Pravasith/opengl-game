@@ -6,7 +6,7 @@
 
 #include <GLFW/glfw3.h>
 
-#include "Experience/Window.h"
+#include "Experience/Experience.h"
 #include "Headers/Input.h"
 #include <cstdlib>
 #include <iostream>
@@ -82,8 +82,7 @@ int main(int argc, char **argv) {
   /* glDeleteProgram(shaderProgram); */
   /*  */
 
-  Window *window = nullptr;
-  window = Window::Get("/Andra");
+  Experience::Get();
 
   /* while (!glfwWindowShouldClose(window)) { */
   /* ProcessInput(window); */
