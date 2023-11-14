@@ -9,6 +9,7 @@ class Window {
 public:
   static Window *Get() {
     static Window *instance = nullptr;
+
     if (!instance) {
       instance = new Window();
     }
@@ -27,17 +28,7 @@ public:
 
   void Destroy() { glfwTerminate(); }
 
-  void GameLoop() {
-    while (!glfwWindowShouldClose(window)) {
-      /* Update(); */
-
-      /* Swap front and back buffers */
-      glfwSwapBuffers(window);
-
-      /* Poll for and process events */
-      glfwPollEvents();
-    }
-  }
+  GLFWwindow *getGLTFWindow() { return window; }
 
 private:
   GLFWwindow *window = nullptr;

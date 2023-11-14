@@ -19,6 +19,7 @@ set(GLFW_BUILD_EXAMPLES
 add_subdirectory(CopyPaste)
 add_subdirectory(Algorithms)
 add_subdirectory(DataStructures)
+add_subdirectory(Experience)
 add_subdirectory(vendor)
 
 # find_package(OpenGL REQUIRED)
@@ -31,6 +32,7 @@ find_package(glfw3 REQUIRED)
 
 target_link_libraries(dsa PUBLIC CopyPaste)
 target_link_libraries(dsa PUBLIC Algorithms DataStructures)
+target_link_libraries(dsa PUBLIC Experience)
 target_link_libraries(dsa PUBLIC glad glfw)
 target_link_libraries(dsa PUBLIC OpenGL::GL)
 

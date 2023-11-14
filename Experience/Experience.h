@@ -1,9 +1,13 @@
 #pragma once
 
 #include "Window.h"
+#include <iostream>
 
 class Experience {
 public:
+  Experience();
+
+  // Singleton
   static Experience *Get() {
     static Experience *instance = nullptr;
 
@@ -14,11 +18,9 @@ public:
     return instance;
   }
 
+  void GameLoop();
+  void Update();
+
 private:
-  Experience() {
-    Window *window = Window::Get();
-    window->Create("/_ANDRA_PRAV_");
-    window->GameLoop();
-    window->Destroy();
-  }
+  static Window *window;
 };
