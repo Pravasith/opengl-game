@@ -12,23 +12,8 @@
 #include <iostream>
 
 int main(int argc, char **argv) {
-  /* gladLoadGL(); */
-  /* unsigned int vertexShader = glCreateShader(GL_VERTEX_SHADER); */
-  /* glShaderSource(vertexShader, 1, &vertexShaderSource, NULL); */
-  /* glCompileShader(vertexShader); */
-  /*  */
-  /* unsigned int fragmentShader = glCreateShader(GL_FRAGMENT_SHADER); */
-  /* glShaderSource(fragmentShader, 1, &fragmentShaderSource, NULL); */
-  /* glCompileShader(fragmentShader); */
-  /*  */
-  /* unsigned int shaderProgram = glCreateProgram(); */
-  /* glAttachShader(shaderProgram, vertexShader); */
-  /* glAttachShader(shaderProgram, fragmentShader); */
-  /* glLinkProgram(shaderProgram); */
-  /*  */
-  /* glDeleteShader(vertexShader); */
-  /* glDeleteShader(fragmentShader); */
-  /*  */
+  Experience::Get(argv[0]);
+
   /* // clang-format off */
   /* GLfloat vertices[] = { */
   /*   -0.5f, -0.5f * float(sqrt(3)) / 3, 0.0f, */
@@ -36,7 +21,7 @@ int main(int argc, char **argv) {
   /*    0.0f,  0.5f * float(sqrt(3)) * 2 / 3, 0.0f */
   /* }; */
   /* // clang-format on */
-  /*  */
+
   /* unsigned int VBO, VAO; */
   /* glGenVertexArrays(1, &VAO); */
   /* glGenBuffers(1, &VBO); */
@@ -53,8 +38,7 @@ int main(int argc, char **argv) {
   /*  */
   /* glBindBuffer(GL_ARRAY_BUFFER, 0); */
   /* glBindVertexArray(0); */
-  /*  */
-  /*  */
+
   /* // optional: de-allocate all resources once they've outlived their purpose:
    */
   /* // ------------------------------------------------------------------------
@@ -62,9 +46,6 @@ int main(int argc, char **argv) {
   /* glDeleteVertexArrays(1, &VAO); */
   /* glDeleteBuffers(1, &VBO); */
   /* glDeleteProgram(shaderProgram); */
-  /*  */
-
-  Experience::Get();
 
   /* while (!glfwWindowShouldClose(window)) { */
   /* ProcessInput(window); */
