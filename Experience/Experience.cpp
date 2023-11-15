@@ -1,6 +1,8 @@
 #include "Experience.h"
 #include "VertexGroup.h"
 #include <GLFW/glfw3.h>
+#include <iostream>
+#include <ostream>
 
 Experience *Experience::Get(char *dir) {
   __pwd = dir;
@@ -17,7 +19,7 @@ Experience::Experience() {
   /* Create a GLFW Window and use it for GameLoop */
   window = Window::Get();
   window->Create(__pwd);
-  __glfwWindow = window->getGLTFWindow();
+  __glfwWindow = window->getGLFWWindow();
 
   /* Starting Game Loop, loading Shaders and generating a */
   /* ShaderProgram */
@@ -30,20 +32,23 @@ Experience::Experience() {
       0.5f, -0.5f * float(sqrt(3)) / 3, 0.0f,
       0.0f,  0.5f * float(sqrt(3)) * 2 / 3, 0.0f
   };
+
+  /* std::cout << sizeof(vertices) << std::endl; */
+
   // clang-format on
 
-  vertexGroup = new VertexGroup(vertices);
+  vertexGroup = new VertexGroup(vertices, sizeof(vertices));
+
+  /* Starting GameLoop
+   *  ------------------------------------------------------------------------
+   */
+  GameLoop();
 
   /*  Optional: de-allocate all resources once they've outlived their purpose:
    *  ------------------------------------------------------------------------
    */
-  vertexGroup->ClearBuffers();
-  shaders->DeleteShaderProgram();
-
-  /* Stateing GameLoop
-   *  ------------------------------------------------------------------------
-   */
-  GameLoop();
+  /* vertexGroup->ClearBuffers(); */
+  /* shaders->DeleteShaderProgram(); */
 
   window->Destroy();
 }

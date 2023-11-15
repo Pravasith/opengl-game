@@ -14,7 +14,10 @@ public:
 
   GLuint GetShaderProgram() { return __shaderProgram; }
   void DeleteShaderProgram() { glDeleteProgram(__shaderProgram); }
-  void UseShaderProgram() { glUseProgram(__shaderProgram); }
+  void UseShaderProgram() {
+    /* std::cout << __shaderProgram << '\n'; */
+    glUseProgram(__shaderProgram);
+  }
 
 private:
   void Init() {
@@ -74,5 +77,5 @@ private:
     glDeleteShader(fragmentShader);
   }
 
-  GLuint __shaderProgram;
+  GLuint __shaderProgram = 0;
 };
