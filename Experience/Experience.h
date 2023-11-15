@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../Shaders/Shaders.h"
+#include "VertexGroup.h"
 #include "Window.h"
 #include <iostream>
 #include <string>
@@ -17,6 +18,10 @@ public:
 
 private:
   static Window *window;
-  static char *pwd;
+  static VertexGroup *vertexGroup;
   static Shaders *shaders;
+
+  static char *__pwd;
+  static GLFWwindow *__glfwWindow;
+  static GLuint __shaderProgram;
 };

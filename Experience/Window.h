@@ -28,6 +28,11 @@ public:
 
   void Destroy() { glfwTerminate(); }
 
+  void BgClearColor() {
+    glClearColor(.2f, .2f, .2f, 1.0f);
+    glClear(GL_COLOR_BUFFER_BIT);
+  }
+
   GLFWwindow *getGLTFWindow() { return window; }
 
 private:

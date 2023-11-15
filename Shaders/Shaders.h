@@ -4,7 +4,6 @@
 /* clang-format off */
 #include <glad/glad.h>
 /* clang-format on */
-/* #include <GLFW/glfw3.h> */
 
 #include <iostream>
 #include <string>
@@ -13,6 +12,10 @@ class Shaders {
 public:
   Shaders() { Init(); }
 
+  GLuint GetShaderProgram() { return __shaderProgram; }
+  void DeleteShaderProgram() { glDeleteProgram(__shaderProgram); }
+  void UseShaderProgram() { glUseProgram(__shaderProgram); }
+
 private:
   void Init() {
     if (!gladLoadGL()) {
@@ -20,7 +23,7 @@ private:
     }
 
     /* Load Vertex Shader */
-    unsigned int vertexShader = glCreateShader(GL_VERTEX_SHADER);
+    GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
     std::string vertexShaderSrc = load_shader("../../Shaders/vertex.glsl");
 
     const GLchar *vertexShaderSource = vertexShaderSrc.c_str();
@@ -39,7 +42,7 @@ private:
     }
 
     /* Load Fragment Shader  */
-    unsigned int fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
+    GLuint fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
     std::string fragmentShaderSrc = load_shader("../../Shaders/fragment.glsl");
 
     const GLchar *fragmentShaderSource = fragmentShaderSrc.c_str();
@@ -54,15 +57,15 @@ private:
                 << infoLog << std::endl;
     }
 
-    unsigned int shaderProgram = glCreateProgram();
-    glAttachShader(shaderProgram, vertexShader);
-    glAttachShader(shaderProgram, fragmentShader);
-    glLinkProgram(shaderProgram);
+    __shaderProgram = glCreateProgram();
+    glAttachShader(__shaderProgram, vertexShader);
+    glAttachShader(__shaderProgram, fragmentShader);
+    glLinkProgram(__shaderProgram);
 
     // check for linking errors
-    glGetProgramiv(shaderProgram, GL_LINK_STATUS, &success);
+    glGetProgramiv(__shaderProgram, GL_LINK_STATUS, &success);
     if (!success) {
-      glGetProgramInfoLog(shaderProgram, 512, NULL, infoLog);
+      glGetProgramInfoLog(__shaderProgram, 512, NULL, infoLog);
       std::cout << "ERROR::SHADER::PROGRAM::LINKING_FAILED\n"
                 << infoLog << std::endl;
     }
@@ -70,4 +73,6 @@ private:
     glDeleteShader(vertexShader);
     glDeleteShader(fragmentShader);
   }
+
+  GLuint __shaderProgram;
 };
