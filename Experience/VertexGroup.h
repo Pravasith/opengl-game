@@ -8,33 +8,44 @@
 
 class VertexGroup {
 public:
-  VertexGroup(GLfloat vertices[], int size) { CreateNew(vertices, size); }
+  VertexGroup(GLfloat vertexArray[], int vertexArraySize, GLuint elementArray[],
+              int elementArraySize) {
+    CreateNew(vertexArray, vertexArraySize, elementArray, elementArraySize);
+  }
 
   void ClearBuffers() {
     glDeleteVertexArrays(1, &VAO);
     glDeleteBuffers(1, &VBO);
+    glDeleteBuffers(1, &EBO);
   }
 
   void BindVAO() { glBindVertexArray(VAO); }
-  void DrawArrays() { glDrawArrays(GL_TRIANGLES, 0, 3); }
+  void DrawArrays() {
+    /* glDrawArrays(GL_TRIANGLES, 0, 3);  */
+    glDrawElements(GL_TRIANGLES, 9, GL_UNSIGNED_INT, 0);
+  }
 
 private:
-  void CreateNew(GLfloat vertices[], int size) {
+  void CreateNew(GLfloat vertexArray[], int vertexArraySize,
+                 GLuint elementArray[], int elementArraySize) {
     glGenVertexArrays(1, &VAO);
+
     glGenBuffers(1, &VBO);
+    glGenBuffers(1, &EBO);
 
     // bind the Vertex Array Object first, then bind and set vertex buffer(s),
     // and then configure vertex attributes(s).
     glBindVertexArray(VAO);
-    /* std::cout << sizeof(vertices) << "-" << 2 * sizeof(GLfloat) << std::endl;
-     */
 
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    glBufferData(GL_ARRAY_BUFFER, size, vertices, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, vertexArraySize, vertexArray, GL_STATIC_DRAW);
 
-    // clang-format off
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
-    // clang-format on
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, elementArraySize, elementArray,
+                 GL_STATIC_DRAW);
+
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float),
+                          (void *)0);
     glEnableVertexAttribArray(0);
 
     // note that this is allowed, the call to glVertexAttribPointer registered
@@ -42,7 +53,8 @@ private:
     // can safely unbind
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
   }
 
-  GLuint VBO, VAO;
+  GLuint VBO, VAO, EBO;
 };
