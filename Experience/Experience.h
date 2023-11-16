@@ -1,27 +1,29 @@
 #pragma once
 
+#include "../Headers/BufferObjects.h"
+#include "../Headers/Window.h"
 #include "../Shaders/Shaders.h"
-#include "VertexGroup.h"
-#include "Window.h"
 #include <iostream>
 #include <string>
 
 class Experience {
 public:
-  Experience();
-
-  // Singleton
   static Experience *Get(char *dir);
+  ~Experience();
 
   void GameLoop();
   void Update();
+  void LoadOpenGL();
 
 private:
+  Experience();
+
   static Window *window;
-  static VertexGroup *vertexGroup;
   static Shaders *shaders;
+  static VBO *vbo;
+  static EBO *ebo;
+  static VAO *vao;
 
   static char *__pwd;
   static GLFWwindow *__glfwWindow;
-  static GLuint __shaderProgram;
 };

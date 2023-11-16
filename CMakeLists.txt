@@ -20,9 +20,11 @@ add_subdirectory(CopyPaste)
 add_subdirectory(Algorithms)
 add_subdirectory(DataStructures)
 add_subdirectory(Experience)
+add_subdirectory(Shaders)
+
+# Include libraries like GLAD
 add_subdirectory(vendor)
 
-# find_package(OpenGL REQUIRED)
 set(SOURCE_FILES main.cpp)
 
 add_executable(ardna ${SOURCE_FILES})
@@ -32,7 +34,7 @@ find_package(glfw3 REQUIRED)
 
 target_link_libraries(ardna PUBLIC CopyPaste)
 target_link_libraries(ardna PUBLIC Algorithms DataStructures)
-target_link_libraries(ardna PUBLIC Experience)
+target_link_libraries(ardna PUBLIC Experience Shaders)
 target_link_libraries(ardna PUBLIC glad glfw)
 target_link_libraries(ardna PUBLIC OpenGL::GL)
 
