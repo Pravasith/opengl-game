@@ -1,8 +1,9 @@
-#include "../Headers/Window.h"
 
+// clang-format off
 #include "../Headers/Callbacks.h"
+// clang-format on
+#include "../Headers/Window.h"
 #include "../Headers/Utilities.h"
-#include <GLFW/glfw3.h>
 #include <iostream>
 
 Window::Window() {

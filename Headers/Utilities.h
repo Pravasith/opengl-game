@@ -1,7 +1,11 @@
 #pragma once
 
+#include <cmath>
+#include <cstdint>
 #include <fstream>
+#include <glad/glad.h>
 #include <iostream>
+#include <math.h>
 #include <sstream>
 #include <string>
 #include <vector>
@@ -46,4 +50,38 @@ static std::string load_shader(const char *filename) {
   }
 
   return ret;
+}
+
+const float TAU = 2 * 3.14159265358979323846f;
+
+static void generate_n_gon(const uint32_t n, std::vector<GLuint> &elements,
+                           std::vector<GLfloat> &vertices) {
+
+  const float theta = TAU / static_cast<float>(n);
+
+  // Clear the vectors (assuming you want to start fresh)
+  elements.clear();
+  vertices.clear();
+
+  // Generate vertices and elements for the n-gon
+  for (uint32_t i = 0; i < n; ++i) {
+    GLfloat x = std::cos(theta * i) * .5f;
+    GLfloat y = std::sin(theta * i) * .5f;
+
+    GLfloat r = x + .5f;
+    GLfloat g = y + .5f;
+    GLfloat b = .5f;
+
+    vertices.push_back(x);
+    vertices.push_back(y);
+    vertices.push_back(0.f); // Z coordinate which is zero
+
+    vertices.push_back(r);
+    vertices.push_back(g);
+    vertices.push_back(b);
+
+    elements.push_back(0);               // Center vertex
+    elements.push_back(i + 1);           // Next vertex
+    elements.push_back((i + 1) % n + 1); // Wrap around to the first vertex
+  }
 }

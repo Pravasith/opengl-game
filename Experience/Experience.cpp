@@ -1,11 +1,17 @@
 #include "Experience.h"
+#include "../Headers/Utilities.h"
 #include "../Headers/Window.h"
 #include "../Shaders/Shaders.h"
+#include "../vendor/stb_image/stb_image.h"
 
 #include <GLFW/glfw3.h>
+#include <cstdint>
 #include <iostream>
 #include <math.h>
 #include <ostream>
+#include <vector>
+
+const uint32_t n = 8 * 3;
 
 Experience *Experience::Get(char *dir) {
   __pwd = dir;
@@ -34,33 +40,37 @@ Experience::Experience() {
   /* ShaderProgram */
 
   // clang-format off
-  GLfloat vertices[] = {
-      /* CO-ORDINATES                          | COLORS          */
-      -.5f, -.5f * float(sqrt(3)) / 3, .0f,      .8f, .8f, .0f, // lower left corner
-       .5f, -.5f * float(sqrt(3)) / 3, .0f,      .8f, .0f, .8f, // lower right corner
-       .0f,  .5f * float(sqrt(3)) * 2 / 3, .0f,  .0f, .8f, .8f, // upper corner
-      /* CO-ORDINATES                          | COLORS          */
-      -.5f / 2, .5f * float(sqrt(3)) / 6, .0f,   .8f, .8f, .8f, // inner left
-       .5f / 2, .5f * float(sqrt(3)) / 6, .0f,   .8f, .8f, .8f, // inner right
-       .0f,  -.5f * float(sqrt(3)) / 3, .0f,     .8f, .8f, .8f, // inner down
-      /* CO-ORDINATES                          | COLORS          */
-  };
+  /* GLfloat vertices[] = { */
+      /* CO-ORDINATES                          | COLORS         |  */
+      /* -.5f, -.5f * float(sqrt(3)) / 3, .0f,      .8f, .8f, .0f,    // lower left corner */
+      /*  .5f, -.5f * float(sqrt(3)) / 3, .0f,      .8f, .0f, .8f,    // lower right corner */
+      /*  .0f,  .5f * float(sqrt(3)) * 2 / 3, .0f,  .0f, .8f, .8f,    // upper corner */
+      /* CO-ORDINATES                          | COLORS         |  */
+      /* -.5f / 2, .5f * float(sqrt(3)) / 6, .0f,   .8f, .8f, .8f,    // inner left */
+      /*  .5f / 2, .5f * float(sqrt(3)) / 6, .0f,   .8f, .8f, .8f,    // inner right */
+      /*  .0f,  -.5f * float(sqrt(3)) / 3, .0f,     .8f, .8f, .8f,    // inner down */
+      /* CO-ORDINATES                          | COLORS         |  */
+  /* }; */
 
-  GLuint elements[] = {
-    0, 3, 5,
-    3, 2, 4,
-    5, 4, 1
-  };
+  /* GLuint elements[] = { */
+  /*   0, 3, 5, */
+  /*   3, 2, 4, */
+  /*   5, 4, 1 */
+  /* }; */
   // clang-format on
+  std::vector<GLfloat> vertices;
+  std::vector<GLuint> elements;
+
+  generate_n_gon(n, elements, vertices);
 
   // Generates Vertex Array Object and binds it
   vao = new VAO;
   vao->Bind();
 
   // Generates Vertex Buffer Object and links it to vertices
-  vbo = new VBO(vertices, sizeof(vertices));
+  vbo = new VBO(vertices.data(), (vertices.size() * sizeof(GLfloat)));
   // Generates Element Buffer Object and links it to indices
-  ebo = new EBO(elements, sizeof(elements));
+  ebo = new EBO(elements.data(), (elements.size() * sizeof(GLuint)));
   ebo->Bind();
 
   // Links VBO attributes such as coordinates and colors to VAO
@@ -73,17 +83,36 @@ Experience::Experience() {
   vbo->Unbind();
   ebo->Unbind();
 
+  /* unsigned int texture; */
+  /* glGenTextures(1, &texture); */
+  /* glBindTexture(GL_TEXTURE_2D, texture); */
+  /* // set the texture wrapping/filtering options (on the currently bound
+   * texture */
+  /* // object) */
+  /* glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT); */
+  /* glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT); */
+  /* glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, */
+  /*                 GL_LINEAR_MIPMAP_LINEAR); */
+  /* glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR); */
+  /* // load and generate the texture */
+  /* int width, height, nrChannels; */
+  /* unsigned char *data = */
+  /*     stbi_load("../assets/sukuna.jpeg", &width, &height, &nrChannels, 0); */
+  /* if (data) { */
+  /*   glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, */
+  /*                GL_UNSIGNED_BYTE, data); */
+  /*   glGenerateMipmap(GL_TEXTURE_2D); */
+  /* } else { */
+  /*   std::cout << "Failed to load texture" << std::endl; */
+  /* } */
+  /* stbi_image_free(data); */
+
   /* Starting GameLoop
    *  ------------------------------------------------------------------------
    */
   GameLoop();
 
-  // Delete all the objects we've created
-  vao->Delete();
-  vbo->Delete();
-  ebo->Delete();
-  shaders->DeleteShaderProgram();
-
+  CleanUp();
   window->Destroy();
 }
 
@@ -105,7 +134,15 @@ void Experience::Update() {
   // Bind the VAO so OpenGL knows to use it
   vao->Bind();
   // Draw primitives, number of indices, datatype of indices, index of indices
-  glDrawElements(GL_TRIANGLES, 9, GL_UNSIGNED_INT, 0);
+  glDrawElements(GL_TRIANGLES, 3 * n, GL_UNSIGNED_INT, 0);
+}
+
+void Experience::CleanUp() {
+  // Delete all the objects we've created
+  vao->Delete();
+  vbo->Delete();
+  ebo->Delete();
+  shaders->DeleteShaderProgram();
 }
 
 void Experience::LoadOpenGL() {

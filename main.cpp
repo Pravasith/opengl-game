@@ -13,9 +13,5 @@
 int main(int argc, char **argv) {
   Experience::Get(argv[0]);
 
-  /* while (!glfwWindowShouldClose(window)) { */
-  /* ProcessInput(window); */
-  /* } */
-
   return EXIT_SUCCESS;
 }

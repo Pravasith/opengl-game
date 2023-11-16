@@ -9,14 +9,15 @@
 class Experience {
 public:
   static Experience *Get(char *dir);
+
+private:
+  Experience();
   ~Experience();
 
   void GameLoop();
   void Update();
   void LoadOpenGL();
-
-private:
-  Experience();
+  void CleanUp();
 
   static Window *window;
   static Shaders *shaders;
