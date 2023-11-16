@@ -36,13 +36,13 @@ Experience::Experience() {
   // clang-format off
   GLfloat vertices[] = {
       /* CO-ORDINATES                          | COLORS          */
-      -.5f, -.5f * float(sqrt(3)) / 3, .0f,      .8f, .3f, .02f, // lower left corner
-       .5f, -.5f * float(sqrt(3)) / 3, .0f,      .8f, .3f, .02f, // lower right corner
-       .0f,  .5f * float(sqrt(3)) * 2 / 3, .0f,  1.f, .6f, .32f, // upper corner
+      -.5f, -.5f * float(sqrt(3)) / 3, .0f,      .8f, .8f, .0f, // lower left corner
+       .5f, -.5f * float(sqrt(3)) / 3, .0f,      .8f, .0f, .8f, // lower right corner
+       .0f,  .5f * float(sqrt(3)) * 2 / 3, .0f,  .0f, .8f, .8f, // upper corner
       /* CO-ORDINATES                          | COLORS          */
-      -.5f / 2, .5f * float(sqrt(3)) / 6, .0f,   .9f, .45f, .17f, // inner left
-       .5f / 2, .5f * float(sqrt(3)) / 6, .0f,   .9f, .45f, .17f, // inner right
-       .0f,  -.5f * float(sqrt(3)) / 3, .0f,     .8f, .45f, .02f, // inner down
+      -.5f / 2, .5f * float(sqrt(3)) / 6, .0f,   .8f, .8f, .8f, // inner left
+       .5f / 2, .5f * float(sqrt(3)) / 6, .0f,   .8f, .8f, .8f, // inner right
+       .0f,  -.5f * float(sqrt(3)) / 3, .0f,     .8f, .8f, .8f, // inner down
       /* CO-ORDINATES                          | COLORS          */
   };
 

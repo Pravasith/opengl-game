@@ -48,7 +48,7 @@ void Window::Destroy() {
 }
 
 void Window::BgClearColor() {
-  glClearColor(.2f, .2f, .6f, 1.0f);
+  glClearColor(.2f, .2f, .2f, 1.0f);
   glClear(GL_COLOR_BUFFER_BIT);
 }
 
