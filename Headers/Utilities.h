@@ -64,24 +64,36 @@ static void generate_n_gon(const uint32_t n, std::vector<GLuint> &elements,
   vertices.clear();
 
   // Generate vertices and elements for the n-gon
-  for (uint32_t i = 0; i < n; ++i) {
+  for (uint32_t i = 0; i < n + 1; i++) {
     GLfloat x = std::cos(theta * i) * .5f;
     GLfloat y = std::sin(theta * i) * .5f;
 
+    // Position Coordinates
+    vertices.push_back(x);
+    vertices.push_back(y);
+    vertices.push_back(0.f);
+
+    /* Color Coordinates */
     GLfloat r = x + .5f;
     GLfloat g = y + .5f;
     GLfloat b = .5f;
-
-    vertices.push_back(x);
-    vertices.push_back(y);
-    vertices.push_back(0.f); // Z coordinate which is zero
 
     vertices.push_back(r);
     vertices.push_back(g);
     vertices.push_back(b);
 
-    elements.push_back(0);               // Center vertex
-    elements.push_back(i + 1);           // Next vertex
-    elements.push_back((i + 1) % n + 1); // Wrap around to the first vertex
+    /* Texture Coordinates */
+    GLfloat s = x + .5f;
+    GLfloat t = y + .5f;
+
+    vertices.push_back(s);
+    vertices.push_back(t);
+
+    if (i < n) {
+      /* Indices or "Elements" */
+      elements.push_back(i);           // Center vertex
+      elements.push_back((i + 1) % n); // Next vertex
+      elements.push_back(n);           // Wrap around to the first vertex
+    }
   }
 }

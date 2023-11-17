@@ -2,7 +2,7 @@
 #include "../Headers/Utilities.h"
 #include "../Headers/Window.h"
 #include "../Shaders/Shaders.h"
-#include "../vendor/stb_image/stb_image.h"
+#include "../vendor/stb_image/stb_image.cpp"
 
 #include <GLFW/glfw3.h>
 #include <cstdint>
@@ -11,7 +11,8 @@
 #include <ostream>
 #include <vector>
 
-const uint32_t n = 8 * 3;
+const uint32_t n = 7;
+unsigned int texture;
 
 Experience *Experience::Get(char *dir) {
   __pwd = dir;
@@ -39,25 +40,6 @@ Experience::Experience() {
   /* Starting Game Loop, loading Shaders and generating a */
   /* ShaderProgram */
 
-  // clang-format off
-  /* GLfloat vertices[] = { */
-      /* CO-ORDINATES                          | COLORS         |  */
-      /* -.5f, -.5f * float(sqrt(3)) / 3, .0f,      .8f, .8f, .0f,    // lower left corner */
-      /*  .5f, -.5f * float(sqrt(3)) / 3, .0f,      .8f, .0f, .8f,    // lower right corner */
-      /*  .0f,  .5f * float(sqrt(3)) * 2 / 3, .0f,  .0f, .8f, .8f,    // upper corner */
-      /* CO-ORDINATES                          | COLORS         |  */
-      /* -.5f / 2, .5f * float(sqrt(3)) / 6, .0f,   .8f, .8f, .8f,    // inner left */
-      /*  .5f / 2, .5f * float(sqrt(3)) / 6, .0f,   .8f, .8f, .8f,    // inner right */
-      /*  .0f,  -.5f * float(sqrt(3)) / 3, .0f,     .8f, .8f, .8f,    // inner down */
-      /* CO-ORDINATES                          | COLORS         |  */
-  /* }; */
-
-  /* GLuint elements[] = { */
-  /*   0, 3, 5, */
-  /*   3, 2, 4, */
-  /*   5, 4, 1 */
-  /* }; */
-  // clang-format on
   std::vector<GLfloat> vertices;
   std::vector<GLuint> elements;
 
@@ -74,38 +56,46 @@ Experience::Experience() {
   ebo->Bind();
 
   // Links VBO attributes such as coordinates and colors to VAO
-  vao->LinkAttrib(*vbo, 0, 3, GL_FLOAT, 6 * sizeof(float), (void *)0);
-  vao->LinkAttrib(*vbo, 1, 3, GL_FLOAT, 6 * sizeof(float),
+  vao->LinkAttrib(*vbo, 0, 3, GL_FLOAT, 8 * sizeof(float), (void *)0);
+  vao->LinkAttrib(*vbo, 1, 3, GL_FLOAT, 8 * sizeof(float),
                   (void *)(3 * sizeof(float)));
+  vao->LinkAttrib(*vbo, 2, 2, GL_FLOAT, 8 * sizeof(float),
+                  (void *)(6 * sizeof(float)));
 
   // Unbind all to prevent accidentally modifying them
   vao->Unbind();
   vbo->Unbind();
   ebo->Unbind();
 
-  /* unsigned int texture; */
-  /* glGenTextures(1, &texture); */
-  /* glBindTexture(GL_TEXTURE_2D, texture); */
-  /* // set the texture wrapping/filtering options (on the currently bound
-   * texture */
-  /* // object) */
-  /* glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT); */
-  /* glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT); */
-  /* glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, */
-  /*                 GL_LINEAR_MIPMAP_LINEAR); */
-  /* glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR); */
-  /* // load and generate the texture */
-  /* int width, height, nrChannels; */
-  /* unsigned char *data = */
-  /*     stbi_load("../assets/sukuna.jpeg", &width, &height, &nrChannels, 0); */
-  /* if (data) { */
-  /*   glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, */
-  /*                GL_UNSIGNED_BYTE, data); */
-  /*   glGenerateMipmap(GL_TEXTURE_2D); */
-  /* } else { */
-  /*   std::cout << "Failed to load texture" << std::endl; */
-  /* } */
-  /* stbi_image_free(data); */
+  // TEXTURES TEXTURES TEXTURES TEXTURES TEXTURES TEXTURES
+  // TEXTURES TEXTURES TEXTURES TEXTURES TEXTURES TEXTURES
+
+  glGenTextures(1, &texture);
+  glBindTexture(GL_TEXTURE_2D, texture);
+  // set the texture wrapping/filtering options (on the currently bound texture
+  // object)
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,
+                  GL_LINEAR_MIPMAP_LINEAR);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+
+  // load and generate the texture
+  int width, height, nrChannels;
+  unsigned char *data = stbi_load("../../assets/textures/sukuna_hd.png", &width,
+                                  &height, &nrChannels, 0);
+
+  if (data) {
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB,
+                 GL_UNSIGNED_BYTE, data);
+    glGenerateMipmap(GL_TEXTURE_2D);
+  } else {
+    std::cout << "Failed to load texture" << std::endl;
+  }
+  stbi_image_free(data);
+
+  // TEXTURES TEXTURES TEXTURES TEXTURES TEXTURES TEXTURES
+  // TEXTURES TEXTURES TEXTURES TEXTURES TEXTURES TEXTURES
 
   /* Starting GameLoop
    *  ------------------------------------------------------------------------
@@ -131,6 +121,7 @@ void Experience::Update() {
   window->BgClearColor();
   shaders->UseShaderProgram();
 
+  glBindTexture(GL_TEXTURE_2D, texture);
   // Bind the VAO so OpenGL knows to use it
   vao->Bind();
   // Draw primitives, number of indices, datatype of indices, index of indices
