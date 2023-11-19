@@ -1,8 +1,10 @@
 #pragma once
 
 #include "../Headers/BufferObjects.h"
+#include "../Headers/Texture.h"
 #include "../Headers/Window.h"
 #include "../Shaders/Shaders.h"
+
 #include <iostream>
 #include <string>
 
@@ -24,6 +26,7 @@ private:
   static VBO *vbo;
   static EBO *ebo;
   static VAO *vao;
+  static Texture *texture;
 
   static char *__pwd;
   static GLFWwindow *__glfwWindow;

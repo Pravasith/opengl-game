@@ -1,7 +1,3 @@
-/* clang-format off */
-#include <glad/glad.h>
-/* clang-format on */
-
 #include "../Headers/BufferObjects.h"
 
 /* VBO class

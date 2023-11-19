@@ -2,7 +2,6 @@
 #include "../Headers/Utilities.h"
 #include "../Headers/Window.h"
 #include "../Shaders/Shaders.h"
-#include "../vendor/stb_image/stb_image.cpp"
 
 #include <GLFW/glfw3.h>
 #include <cstdint>
@@ -12,7 +11,6 @@
 #include <vector>
 
 const uint32_t n = 24;
-unsigned int texture;
 
 Experience *Experience::Get(char *dir) {
   __pwd = dir;
@@ -67,39 +65,8 @@ Experience::Experience() {
   vbo->Unbind();
   ebo->Unbind();
 
-  // TEXTURES TEXTURES TEXTURES TEXTURES TEXTURES TEXTURES
-  // TEXTURES TEXTURES TEXTURES TEXTURES TEXTURES TEXTURES
-
-  glGenTextures(1, &texture);
-  glBindTexture(GL_TEXTURE_2D, texture);
-  // set the texture wrapping/filtering options (on the currently bound texture
-  // object)
-  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,
-                  GL_LINEAR_MIPMAP_LINEAR);
-  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-
-  // load and generate the texture
-  int width, height, nrChannels;
-  /* stbi_set_flip_vertically_on_load(true); */
-
-  /* const char *name = "../../assets/textures/rave_ld.jpg"; */
-  const char *name = "../../assets/textures/sukuna_hd.png";
-
-  unsigned char *data = stbi_load(name, &width, &height, &nrChannels, 0);
-
-  if (data) {
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB,
-                 GL_UNSIGNED_BYTE, data);
-    glGenerateMipmap(GL_TEXTURE_2D);
-  } else {
-    std::cout << "Failed to load texture" << std::endl;
-  }
-  stbi_image_free(data);
-
-  // TEXTURES TEXTURES TEXTURES TEXTURES TEXTURES TEXTURES
-  // TEXTURES TEXTURES TEXTURES TEXTURES TEXTURES TEXTURES
+  // Initiate textures
+  texture = new Texture("../../assets/textures/sukuna_hd.png", GL_TEXTURE_2D);
 
   /* Starting GameLoop
    *  ------------------------------------------------------------------------
@@ -125,7 +92,8 @@ void Experience::Update() {
   window->BgClearColor();
   shaders->UseShaderProgram();
 
-  glBindTexture(GL_TEXTURE_2D, texture);
+  // Bind texture
+  texture->Bind();
   // Bind the VAO so OpenGL knows to use it
   vao->Bind();
   // Draw primitives, number of indices, datatype of indices, index of indices
@@ -152,6 +120,7 @@ Experience::~Experience() {
   delete ebo;
   delete window;
   delete shaders;
+  delete texture;
 }
 
 Window *Experience::window = nullptr;
@@ -160,6 +129,8 @@ Shaders *Experience::shaders = nullptr;
 VBO *Experience::vbo = nullptr;
 EBO *Experience::ebo = nullptr;
 VAO *Experience::vao = nullptr;
+
+Texture *Experience::texture = nullptr;
 
 char *Experience::__pwd = nullptr;
 GLFWwindow *Experience::__glfwWindow = nullptr;
