@@ -10,6 +10,8 @@
 #include <string>
 #include <vector>
 
+const float TAU = 2 * 3.14159265358979323846f;
+
 static const char *extract_version(const char *full) {
 
   char curr = *full;
@@ -51,8 +53,6 @@ static std::string load_shader(const char *filename) {
 
   return ret;
 }
-
-const float TAU = 2 * 3.14159265358979323846f;
 
 static void generate_n_gon(const uint32_t n, std::vector<GLuint> &elements,
                            std::vector<GLfloat> &vertices) {

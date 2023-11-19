@@ -11,7 +11,7 @@
 #include <ostream>
 #include <vector>
 
-const uint32_t n = 7;
+const uint32_t n = 24;
 unsigned int texture;
 
 Experience *Experience::Get(char *dir) {
@@ -82,8 +82,12 @@ Experience::Experience() {
 
   // load and generate the texture
   int width, height, nrChannels;
-  unsigned char *data = stbi_load("../../assets/textures/sukuna_hd.png", &width,
-                                  &height, &nrChannels, 0);
+  /* stbi_set_flip_vertically_on_load(true); */
+
+  /* const char *name = "../../assets/textures/rave_ld.jpg"; */
+  const char *name = "../../assets/textures/sukuna_hd.png";
+
+  unsigned char *data = stbi_load(name, &width, &height, &nrChannels, 0);
 
   if (data) {
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB,
