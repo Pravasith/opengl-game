@@ -68,9 +68,7 @@ Experience::Experience() {
   // Initiate textures
   texture = new Texture("../../assets/textures/sukuna_hd.png", GL_TEXTURE_2D);
 
-  /* Starting GameLoop
-   *  ------------------------------------------------------------------------
-   */
+  // Game loop
   GameLoop();
 
   CleanUp();

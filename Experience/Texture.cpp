@@ -11,6 +11,10 @@ void Texture::SetGLenum(GLenum texType) { __texType = texType; }
 
 void Texture::SetTexture(const char *path) {
   glGenTextures(1, &__id);
+
+  // activate the texture unit first before binding texture
+  glActiveTexture(GL_TEXTURE0);
+
   Bind();
 
   // set the texture wrapping/filtering options (on the currently bound
