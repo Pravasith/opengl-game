@@ -5,6 +5,9 @@
 
 #include <GLFW/glfw3.h>
 #include <cstdint>
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 #include <iostream>
 #include <math.h>
 #include <ostream>
@@ -26,7 +29,7 @@ Experience *Experience::Get(char *dir) {
 Experience::Experience() {
   /* Create a GLFW Window and use it for GameLoop */
   window = Window::Get();
-  window->Create(__pwd);
+  window->Create(__pwd, 800, 800);
   __glfwWindow = window->getGLFWWindow();
 
   LoadOpenGL();
@@ -34,9 +37,6 @@ Experience::Experience() {
   const char *FRAGMENT_SHADER_PATH = "../../assets/fragment.glsl";
 
   shaders = new Shaders(VERTEX_SHADER_PATH, FRAGMENT_SHADER_PATH);
-
-  /* Starting Game Loop, loading Shaders and generating a */
-  /* ShaderProgram */
 
   std::vector<GLfloat> vertices;
   std::vector<GLuint> elements;
@@ -66,7 +66,8 @@ Experience::Experience() {
   ebo->Unbind();
 
   // Initiate textures
-  texture = new Texture("../../assets/textures/sukuna_hd.png", GL_TEXTURE_2D);
+  texture =
+      new Texture("../../assets/textures/sam_altman_hd.png", GL_TEXTURE_2D);
 
   // Game loop
   GameLoop();
@@ -88,10 +89,37 @@ void Experience::GameLoop() {
 
 void Experience::Update() {
   window->BgClearColor();
+  // create transformations
+
   shaders->UseShaderProgram();
 
   // Bind texture
   texture->Bind();
+
+  // create transformations
+  glm::mat4 model = glm::mat4(
+      1.0f); // make sure to initialize matrix to identity matrix first
+  glm::mat4 view = glm::mat4(1.0f);
+  glm::mat4 projection = glm::mat4(1.0f);
+  model = glm::rotate(model, glm::radians(-55.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+  view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
+  projection = glm::perspective(glm::radians(45.0f), (float)800 / (float)800,
+                                0.1f, 100.0f);
+  // retrieve the matrix uniform locations
+  unsigned int modelLoc =
+      glGetUniformLocation(shaders->GetShaderProgram(), "model");
+  unsigned int viewLoc =
+      glGetUniformLocation(shaders->GetShaderProgram(), "view");
+  // pass them to the shaders (3 different ways)
+  glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+  glUniformMatrix4fv(viewLoc, 1, GL_FALSE, &view[0][0]);
+  // note: currently we set the projection matrix each frame, but since the
+  // projection matrix rarely changes it's often best practice to set it outside
+  // the main loop only once.
+  glUniformMatrix4fv(
+      glGetUniformLocation(shaders->GetShaderProgram(), "projection"), 1,
+      GL_FALSE, &projection[0][0]);
+
   // Bind the VAO so OpenGL knows to use it
   vao->Bind();
   // Draw primitives, number of indices, datatype of indices, index of indices

@@ -4,6 +4,7 @@
 // clang-format on
 #include "../Headers/Window.h"
 #include "../Headers/Utilities.h"
+#include <cstdint>
 #include <iostream>
 
 Window::Window() {
@@ -29,7 +30,8 @@ Window *Window::Get() {
 
 GLFWwindow *Window::getGLFWWindow() { return __glfwWindow; }
 
-void Window::Create(const char *name) {
+void Window::Create(const char *name, const uint32_t &width,
+                    const uint32_t &height) {
   __glfwWindow = glfwCreateWindow(800, 800, extract_version(name), NULL, NULL);
 
   if (__glfwWindow == NULL) {

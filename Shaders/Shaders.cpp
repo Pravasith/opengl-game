@@ -1,8 +1,5 @@
-#include "../Headers/Utilities.h"
-/* clang-format off */
-#include <glad/glad.h>
-/* clang-format on */
 #include "Shaders.h"
+#include "../Headers/Utilities.h"
 
 #include <iostream>
 #include <string>

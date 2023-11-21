@@ -7,7 +7,7 @@ public:
   static Window *Get();
 
   GLFWwindow *getGLFWWindow();
-  void Create(const char *name);
+  void Create(const char *name, const uint32_t &width, const uint32_t &height);
   void Destroy();
   void BgClearColor();
 
