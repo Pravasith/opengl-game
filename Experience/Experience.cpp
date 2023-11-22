@@ -13,7 +13,7 @@
 #include <ostream>
 #include <vector>
 
-const uint32_t n = 24;
+const uint32_t n = 4;
 
 Experience *Experience::Get(char *dir) {
   __pwd = dir;
@@ -66,8 +66,7 @@ Experience::Experience() {
   ebo->Unbind();
 
   // Initiate textures
-  texture =
-      new Texture("../../assets/textures/sam_altman_hd.png", GL_TEXTURE_2D);
+  texture = new Texture("../../assets/textures/one_piece.jpg", GL_TEXTURE_2D);
 
   // Game loop
   GameLoop();
@@ -87,6 +86,13 @@ void Experience::GameLoop() {
   }
 }
 
+glm::vec3 cubePositions[] = {
+    glm::vec3(0.0f, 0.0f, -1.5f),   glm::vec3(2.0f, 5.0f, -15.0f),
+    glm::vec3(-1.5f, -2.2f, -2.5f), glm::vec3(-3.8f, -2.0f, -12.3f),
+    glm::vec3(2.4f, -0.4f, -3.5f),  glm::vec3(-1.7f, 3.0f, -7.5f),
+    glm::vec3(1.3f, -2.0f, -2.5f),  glm::vec3(1.5f, 2.0f, -2.5f),
+    glm::vec3(1.5f, 0.2f, -1.5f),   glm::vec3(-1.3f, 1.0f, -1.5f)};
+
 void Experience::Update() {
   window->BgClearColor();
   // create transformations
@@ -102,6 +108,7 @@ void Experience::Update() {
   glm::mat4 view = glm::mat4(1.0f);
   glm::mat4 projection = glm::mat4(1.0f);
   model = glm::rotate(model, glm::radians(-55.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+
   view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
   projection = glm::perspective(glm::radians(45.0f), (float)800 / (float)800,
                                 0.1f, 100.0f);
@@ -123,7 +130,20 @@ void Experience::Update() {
   // Bind the VAO so OpenGL knows to use it
   vao->Bind();
   // Draw primitives, number of indices, datatype of indices, index of indices
-  glDrawElements(GL_TRIANGLES, 3 * n, GL_UNSIGNED_INT, 0);
+  for (unsigned int i = 0; i < 10; i++) {
+    glm::mat4 model = glm::mat4(1.0f);
+    model = glm::translate(model, cubePositions[i]);
+    float angle = 20.0f * i * glfwGetTime();
+    model =
+        glm::rotate(model, glm::radians(angle), glm::vec3(1.0f, 0.3f, 0.5f));
+
+    glUniformMatrix4fv(
+        glGetUniformLocation(shaders->GetShaderProgram(), "model"), 1, GL_FALSE,
+        &model[0][0]);
+
+    /* glDrawArrays(GL_TRIANGLES, 0, 36); */
+    glDrawElements(GL_TRIANGLES, 3 * n * 36, GL_UNSIGNED_INT, 0);
+  }
 }
 
 void Experience::CleanUp() {
