@@ -13,7 +13,7 @@
 #include <ostream>
 #include <vector>
 
-const uint32_t n = 4;
+const uint32_t n = 24;
 
 Experience *Experience::Get(char *dir) {
   __pwd = dir;
@@ -66,7 +66,7 @@ Experience::Experience() {
   ebo->Unbind();
 
   // Initiate textures
-  texture = new Texture("../../assets/textures/one_piece.jpg", GL_TEXTURE_2D);
+  texture = new Texture("../../assets/textures/weird.png", GL_TEXTURE_2D);
 
   // Game loop
   GameLoop();
@@ -120,6 +120,7 @@ void Experience::Update() {
   // pass them to the shaders (3 different ways)
   glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
   glUniformMatrix4fv(viewLoc, 1, GL_FALSE, &view[0][0]);
+
   // note: currently we set the projection matrix each frame, but since the
   // projection matrix rarely changes it's often best practice to set it outside
   // the main loop only once.
@@ -133,7 +134,7 @@ void Experience::Update() {
   for (unsigned int i = 0; i < 10; i++) {
     glm::mat4 model = glm::mat4(1.0f);
     model = glm::translate(model, cubePositions[i]);
-    float angle = 20.0f * i * glfwGetTime();
+    float angle = 20.0f * (i + 1) * glfwGetTime();
     model =
         glm::rotate(model, glm::radians(angle), glm::vec3(1.0f, 0.3f, 0.5f));
 
@@ -141,7 +142,6 @@ void Experience::Update() {
         glGetUniformLocation(shaders->GetShaderProgram(), "model"), 1, GL_FALSE,
         &model[0][0]);
 
-    /* glDrawArrays(GL_TRIANGLES, 0, 36); */
     glDrawElements(GL_TRIANGLES, 3 * n * 36, GL_UNSIGNED_INT, 0);
   }
 }

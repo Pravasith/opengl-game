@@ -32,11 +32,12 @@ add_executable(ardna ${SOURCE_FILES})
 find_package(OpenGL REQUIRED)
 find_package(glfw3 REQUIRED)
 find_package(glm REQUIRED)
+find_package(assimp REQUIRED)
 
 target_link_libraries(ardna PUBLIC CopyPaste)
 target_link_libraries(ardna PUBLIC Algorithms DataStructures)
 target_link_libraries(ardna PUBLIC Experience Shaders)
-target_link_libraries(ardna PUBLIC glad glfw glm)
+target_link_libraries(ardna PUBLIC glad glfw glm assimp)
 target_link_libraries(ardna PUBLIC OpenGL::GL)
 
 target_compile_features(ardna PUBLIC cxx_std_17)
